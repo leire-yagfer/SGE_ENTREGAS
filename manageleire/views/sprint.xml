@@ -1,0 +1,73 @@
+<odoo>
+  <data>
+
+    <!--el tree -> saca los datos en una tabla-->
+    <record model="ir.ui.view" id="vista_manageleire_sprint_tree">
+      <field name="name">vista_manageleire_sprint_tree</field>
+      <field name="model">manageleire.sprint</field>
+      <field name="arch" type="xml">
+        <tree>
+          <!--le indico los campos (de sprint.py) que quiero que se muestren en la tabla -->
+          <field name= "name"/>
+          <field name= "description"/>
+          <field name= "start_date"/>
+          <field name = "end_date"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Plantilla formulario tipo form -> el formulario que sale cuando voy a añadir un nuevo sprint-->
+    <record model="ir.ui.view" id="vista_manageleire_sprint_form"> <!--form pq se trata de un formulario-->
+      <field name="name">vista_manageleire_sprint_form</field>
+      <field name="model">manageleire.sprint</field>
+      <field name="arch" type="xml">
+        <form string="formulario_sprint" >
+          <sheet>
+            <group name="group_top">
+              <group name="group_left">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="duration"/>
+              </group>
+
+              <group name="group_right">
+                <field name="project_id"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>  
+
+    
+    <!-- Plantilla action -->
+    <record model="ir.actions.act_window" id="accion_manageleire_sprint_form">
+      <field name="name">Listado de sprint</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">manageleire.sprint</field>
+      <field name="view_mode">tree,form</field> 
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          Sprint
+        </p>
+        <p> Click <strong> 'Crear' </strong> para añadir nuevos elementos
+         </p>
+      </field>
+    </record>  
+
+
+
+    <!-- menú raíz -->
+    <menuitem name= "Manage de Leire" id= "menu_manageleire_raiz"/> <!--El nombre es lo que se va a ver en el Odoo en los puntos donde salen todaos los apartados y cuando estás en el apartado arriba a la izquierda-->
+    
+    <!--Segundo nivel-->
+    <menuitem name="MANAGE" id= "menu_manageleire_manage" parent= "menu_manageleire_raiz"/>
+    
+    <!--Tercer nivel donde se lleva a cabo -> actions-->
+    <menuitem name="Sprint" id= "menu_manageleire_sprint" parent= "menu_manageleire_manage"
+        action="accion_manageleire_sprint_form"/>  <!--action: id de la plantilla de action-->
+  </data>
+</odoo>
