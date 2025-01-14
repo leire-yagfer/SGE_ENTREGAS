@@ -1,0 +1,107 @@
+<odoo>
+  <data>
+
+    <!--el tree -> saca los datos en una tabla-->
+    <record model="ir.ui.view" id="vista_manageleire_technology_tree">
+      <field name="name">vista_manageleire_technology_tree</field>
+      <field name="model">manageleire.technology</field>
+      <field name="arch" type="xml">
+        <tree>
+          <!--le indico los campos (de technology.py) que quiero que se muestren en la tabla -->
+          <field name= "name"/>
+          <field name= "description"/>
+          <field name= "photo"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Plantilla formulario tipo form -> el formulario que sale cuando voy a añadir un nuevo technology-->
+    <record model="ir.ui.view" id="vista_manageleire_technology_form"> <!--form pq se trata de un formulario-->
+      <field name="name">vista_manageleire_technology_form</field>
+      <field name="model">manageleire.technology</field>
+      <field name="arch" type="xml">
+        <form string="formulario_technology" >
+          <sheet>
+            <group name="group_top">
+                <!--Formulario con vista de dos columnas-->
+                <group name="group_left">
+                    <field name="name"/>
+                    <field name="description"/>
+                </group>
+
+                <group name="group_right">
+                  <field name="photo" widget="image"/>
+                  <!--visualizo la relación M2M-->
+                  <field name="tareas_id"/>
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>  
+
+
+    <!--Modelo Kanban: dar formato de tarjeta a las tecnologías-->
+    <record model="ir.ui.view" id="vista_manageleire_technology_kanban">
+      <field name="name">vista_manageleire_technology_kanban</field>
+      <field name="model">manageleire.technology</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <!--los campos que quiero que se muestren en la vista. poner siempre el id aunque no se vaya a mostrar-->
+          <field name="id"/>
+          <field name= "name"/>
+          <field name="photo"/>
+          <templates>
+            <t t-name="kanban-box"> <!--definir una plantilla Qweb que anida al resto de elementos-->
+              <div t-attf-class="oe_kanban_global_click">
+              <!--dividido en 2 partes (en una aparece la imagen y en la 
+              otra aparece el texto con los detalles del registro)-->
+                <div class="o_kanban_image">
+                  <!--En el primer parámetro de la función hay que poner el nombre del modelo 
+                  que sirve para que se puedan interpretar los datos del registro en crudo, y 
+                  en el segundo, el nombre del campo del modelo que contiene la imagen.-->
+                  <img alt="Cartel"
+                    t-att-src="kanban_image('manageleire.technology','photo', record.id.raw_value)"/> <!--el primer parámetro es el nombre del modelo y el segundo es el nombre del campo-->
+                </div>
+                <div class="o_kanban_details">
+                  <!--en este punto, indico los campos que quiero mostrar de los ya descritos arriba-->
+                  <strong class="o_kanban_record_title"> <!--o_kanban_record_title: muestra los textos resaltados, como títulos-->
+                    <field name="name"/> <!--name es el nombre de la tecnología-->
+                  </strong>
+                </div>
+              </div>
+            </t>
+          </templates>         
+        </kanban>
+      </field>
+    </record>
+
+    
+    <!-- Plantilla action -->
+    <record model="ir.actions.act_window" id="accion_manageleire_technology_form">
+      <field name="name">Listado de tecnologías</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">manageleire.technology</field>
+      <field name="view_mode">tree,form,kanban</field> <!--añadir para que se vea el modelo kanban-->
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          Technology
+        </p>
+        <p> Click <strong> 'Crear' </strong> para añadir nuevos elementos
+         </p>
+      </field>
+    </record>  
+
+
+    <!-- menú raíz -->
+    <menuitem name= "Manage de Leire" id= "menu_manageleire_raiz"/> <!--El nombre es lo que se va a ver en el Odoo en los puntos donde salen todaos los apartados y cuando estás en el apartado arriba a la izquierda-->
+    
+    <!--Segundo nivel-->
+    <menuitem name="MANAGE" id= "menu_manageleire_manage" parent= "menu_manageleire_raiz"/>
+    
+    <!--Tercer nivel donde se lleva a cabo -> actions-->
+    <menuitem name="Technology" id= "menu_manageleire_technology" parent= "menu_manageleire_manage"
+        action="accion_manageleire_technology_form"/>  <!--action: id de la plantilla de action-->
+  </data>
+</odoo>

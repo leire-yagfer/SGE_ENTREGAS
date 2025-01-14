@@ -1,0 +1,68 @@
+<odoo>
+  <data>
+
+    <!--el tree -> saca los datos en una tabla-->
+    <record model="ir.ui.view" id="vista_manageleire_history_tree">
+      <field name="name">vista_manageleire_history_tree</field>
+      <field name="model">manageleire.history</field>
+      <field name="arch" type="xml">
+        <tree>
+          <!--le indico los campos (de history.py) que quiero que se muestren en la tabla -->
+          <field name= "name"/>
+          <field name= "description"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Plantilla formulario tipo form -> el formulario que sale cuando voy a añadir un nuevo history-->
+    <record model="ir.ui.view" id="vista_manageleire_history_form"> <!--form pq se trata de un formulario-->
+      <field name="name">vista_manageleire_history_form</field>
+      <field name="model">manageleire.history</field>
+      <field name="arch" type="xml">
+        <form string="formulario_history" >
+          <sheet>
+            <group name="group_top">
+              <group name="group_left">
+                <field name="name"/>
+                <field name="description"/>
+              </group>
+
+              <group name="group_right">
+                <field name="project_id"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>  
+
+    
+    <!-- Plantilla action -->
+    <record model="ir.actions.act_window" id="accion_manageleire_history_form">
+      <field name="name">Listado de history</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">manageleire.history</field>
+      <field name="view_mode">tree,form</field> 
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          History
+        </p>
+        <p> Click <strong> 'Crear' </strong> para añadir nuevos elementos
+         </p>
+      </field>
+    </record>  
+
+
+
+    <!-- menú raíz -->
+    <menuitem name= "Manage de Leire" id= "menu_manageleire_raiz"/> <!--El nombre es lo que se va a ver en el Odoo en los puntos donde salen todaos los apartados y cuando estás en el apartado arriba a la izquierda-->
+    
+    <!--Segundo nivel-->
+    <menuitem name="MANAGE" id= "menu_manageleire_manage" parent= "menu_manageleire_raiz"/>
+    
+    <!--Tercer nivel donde se lleva a cabo -> actions-->
+    <menuitem name="History" id= "menu_manageleire_history" parent= "menu_manageleire_manage"
+        action="accion_manageleire_history_form"/>  <!--action: id de la plantilla de action-->
+  </data>
+</odoo>
