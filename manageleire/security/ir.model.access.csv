@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-
-access_manageleire_task,manageleire.task,model_manageleire_task,base.group_user,1,1,1,1
-access_manageleire_sprint,manageleire.sprint,model_manageleire_sprint,base.group_user,1,1,1,1
-access_manageleire_project,manageleire.project,model_manageleire_project,base.group_user,1,1,1,1
-access_manageleire_history,manageleire.history,model_manageleire_history,base.group_user,1,1,1,1
-access_manageleire_technology,manageleire.technology,model_manageleire_technology,base.group_user,1,1,1,1
